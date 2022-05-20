@@ -1,1 +1,1 @@
-# This is Shopping list of Tolga Korkmaz.
+# This is Shopping list app of Tolga Korkmaz.
