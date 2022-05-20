@@ -1,15 +1,21 @@
-import Home from "./pages/Home";
-import About from "./pages/About";
+import AddProductToList from "./components/AddProductToList";
+import ProductList from "./components/ProductList";
 
-import { Routes, Route, Navigate } from "react-router-dom";
+// import { Routes, Route, Navigate } from "react-router-dom";
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Navigate to="home" />} />
-      <Route path="home" element={<Home />} />
-      <Route path="about" element={<About />} />
-    </Routes>
+    <>
+      {/* //{" "}
+      <Routes>
+        // <Route path="/" element={<Navigate to="home" />} />
+        // <Route path="home" element={<AddProductToList />} />
+        // <Route path="products" element={<ProductList />} />
+        //{" "} */}
+      {/* </Routes> */}
+      <AddProductToList />
+      <ProductList />
+    </>
   );
 }
 
