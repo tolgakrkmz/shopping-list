@@ -1,17 +1,21 @@
+import { Card, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+
+import "../cardStyle.css";
 
 export default function Home() {
   return (
-    <div>
-      <div className="card">
-        <div className="card-body">
-          <h5 className="card-title">First Bootstrap card</h5>
-          <p className="card-text">Go to About page.</p>
-          <Link to="/about" className="btn btn-primary">
-            Go to About page
+    <>
+      <Card className="Card">
+        <Card.Img variant="top" src="holder.js/100px180" />
+        <Card.Body>
+          <Card.Title>First React-bootstrap Card Components</Card.Title>
+          <Card.Text>Go to About page</Card.Text>
+          <Link to="/about">
+            <Button variant="primary">Go About page</Button>
           </Link>
-        </div>
-      </div>
-    </div>
+        </Card.Body>
+      </Card>
+    </>
   );
 }
