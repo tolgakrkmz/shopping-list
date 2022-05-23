@@ -1,12 +1,18 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import ProductItem from "./ProductItem";
+import { Form } from "react-bootstrap";
+
+import "./ProductList.css";
 
 function ProductList() {
   const productItem = useSelector((state) => state.product);
 
   return (
-    <ul>
+    <ul className="productUl">
+      <Form.Check label="Mark All" />
+      <hr />
+
       {productItem.map((product, idx) => (
         <ProductItem
           key={idx}
