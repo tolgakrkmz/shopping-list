@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addProduct } from "../redux/productSlice";
+import { InputGroup, FormControl, Button } from "react-bootstrap";
+
+import "./AddProductToList.css";
 
 function AddProductToList() {
   const [value, setValue] = useState();
@@ -21,17 +24,15 @@ function AddProductToList() {
   }
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Type you product"
-          value={value || ""}
-          onChange={(event) => setValue(event.target.value)}
-        />
-        <button type="submit">Add</button>
-      </form>
-    </div>
+    <InputGroup size="sm" className="mb-3">
+      <FormControl
+        aria-label="Small"
+        placeholder="Type you product"
+        value={value || ""}
+        onChange={(event) => setValue(event.target.value)}
+      />
+      <Button onClick={handleSubmit}>Add</Button>
+    </InputGroup>
   );
 }
 

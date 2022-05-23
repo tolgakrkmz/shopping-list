@@ -11,8 +11,8 @@ function ProductList() {
   return (
     <ul className="productUl">
       <Form.Check label="Mark All" />
-      <hr />
 
+      <hr />
       {productItem.map((product, idx) => (
         <ProductItem
           key={idx}

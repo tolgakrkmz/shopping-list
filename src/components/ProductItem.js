@@ -13,8 +13,12 @@ function ProductItem({ id, title, isComplete }) {
 
   return (
     <li>
-      <Form.Check onClick={handleCheckboxClick} checked={isComplete} />
-      <p className={isComplete && "product-done"}>{title}</p>
+      <span>
+        <Form.Check onClick={handleCheckboxClick} defaultChecked={isComplete} />
+        <p className={isComplete ? "product-done" : null} id="productItem">
+          {title}
+        </p>
+      </span>
     </li>
   );
 }
