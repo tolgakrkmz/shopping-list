@@ -1,7 +1,6 @@
 import { useDispatch } from "react-redux";
 import { toggleComplete } from "../redux/productSlice";
 import { Form } from "react-bootstrap";
-
 import "./ProductItem.css";
 
 function ProductItem({ id, title, isComplete }) {
@@ -13,12 +12,10 @@ function ProductItem({ id, title, isComplete }) {
 
   return (
     <li>
-      <span>
-        <Form.Check onClick={handleCheckboxClick} defaultChecked={isComplete} />
-        <p className={isComplete ? "product-done" : null} id="productItem">
-          {title}
-        </p>
-      </span>
+      <Form.Check onClick={handleCheckboxClick} checked={isComplete} />
+      <p className={isComplete ? "product-done" : null} id="productItem">
+        {title}
+      </p>
     </li>
   );
 }
