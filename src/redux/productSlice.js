@@ -19,9 +19,19 @@ const productSlice = createSlice({
       );
       state[idx].isComplete = action.payload.isComplete;
     },
+    toggleCompleteAll: (state) => {
+      // STEP 1: Find if every product is complete
+      const isCheckAll = state.every((value) => value.isComplete === true);
+
+      // STEP 2: If all is checked, Mark All
+      for (let i = 0; i < state.length; i++) {
+        state[i].isComplete = !isCheckAll;
+      }
+    },
   },
 });
 
-export const { addProduct, toggleComplete } = productSlice.actions;
+export const { addProduct, toggleComplete, toggleCompleteAll } =
+  productSlice.actions;
 
 export default productSlice.reducer;

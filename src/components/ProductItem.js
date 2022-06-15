@@ -12,7 +12,7 @@ function ProductItem({ id, title, isComplete }) {
 
   return (
     <li>
-      <Form.Check onClick={handleCheckboxClick} checked={isComplete} />
+      <Form.Check onChange={handleCheckboxClick} checked={isComplete} />
       <p className={isComplete ? "product-done" : null} id="productItem">
         {title}
       </p>

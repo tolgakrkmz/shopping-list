@@ -3,21 +3,35 @@ import { useSelector } from "react-redux";
 import ProductItem from "./ProductItem";
 import { Form } from "react-bootstrap";
 import { sortBy } from "lodash";
-
 import "./ProductList.css";
+import { useDispatch } from "react-redux";
+import { toggleCompleteAll } from "../redux/productSlice.js";
 
 function ProductList() {
-  const productItem = useSelector((state) => state.product);
+  const dispatch = useDispatch();
+  const productList = useSelector((state) => state.product);
+  let isCheckAll = true;
 
-  function handleMarkAll() {
-    console.log("Button pressed.");
+  for (let i = 0; i < productList.length; i++) {
+    if (!productList[i].isComplete) {
+      isCheckAll = false;
+    }
   }
 
+  function handleMarkAll() {
+    dispatch(toggleCompleteAll());
+  }
   return (
     <ul className="productUl">
-      <Form.Check label="Mark All" onChange={handleMarkAll} />
+      {productList.length > 0 && (
+        <Form.Check
+          label="Mark All"
+          onChange={handleMarkAll}
+          checked={isCheckAll}
+        />
+      )}
 
-      {sortBy(productItem, ["isComplete"]).map((product, idx) => (
+      {sortBy(productList, ["isComplete"]).map((product, idx) => (
         <ProductItem
           key={idx}
           id={product.id}
