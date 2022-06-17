@@ -1,12 +1,8 @@
-p.product-done {
+.product-item--done {
     text-decoration: line-through;
-    margin-left: 2em;
-    margin-top: -1.4em;
-    line-height: 1.4em;  
-
 }
 
-#productItem {
+.product-item {
     margin-left: 2em;
     margin-top: -1.4em;
     line-height: 1.4em;  

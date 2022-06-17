@@ -3,11 +3,10 @@ import { useDispatch } from "react-redux";
 import { addProduct } from "../redux/productSlice";
 import { InputGroup, FormControl, Button } from "react-bootstrap";
 
-import "./AddProductToList.css";
+import "./ProductAddForm.css";
 
 function AddProductToList() {
   const [value, setValue] = useState();
-
   const dispatch = useDispatch();
 
   function handleSubmit(event) {

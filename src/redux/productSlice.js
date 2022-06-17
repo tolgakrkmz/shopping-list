@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { nanoid } from "https://cdn.jsdelivr.net/npm/nanoid/nanoid.js";
+import { nanoid } from "nanoid";
 
 const productSlice = createSlice({
   name: "product",
@@ -23,7 +23,7 @@ const productSlice = createSlice({
       // STEP 1: Find if every product is complete
       const isCheckAll = state.every((value) => value.isComplete === true);
 
-      // STEP 2: If all is checked, Mark All
+      // STEP 2: If all are checked, Mark All
       for (let i = 0; i < state.length; i++) {
         state[i].isComplete = !isCheckAll;
       }
