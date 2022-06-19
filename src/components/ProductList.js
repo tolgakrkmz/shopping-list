@@ -1,18 +1,15 @@
-import React from "react";
 import { useSelector } from "react-redux";
-// import ProductItem from "./ProductItem";
-import { MemoizedProducts } from "./ProductItem";
+import ProductItem from "./ProductItem";
 import { Form } from "react-bootstrap";
 import "./ProductList.css";
 import { useDispatch } from "react-redux";
 import { toggleCompleteAll } from "../redux/productSlice.js";
+import React, { useMemo } from "react";
 
 function ProductList() {
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.product);
   let isAllProductsComplete = true;
-
-  //Make it with array methods
 
   if (productList.find((e) => e.isComplete === false)) {
     isAllProductsComplete = false;
@@ -32,7 +29,22 @@ function ProductList() {
     return 0;
   }
 
-  const arrayForSort = [...productList];
+  const arrayForSort = React.useMemo(() => [...productList], [productList]);
+
+  let sortedArrayByisComplete = useMemo(
+    () =>
+      arrayForSort
+        .sort(sortProductList)
+        .map((product, idx) => (
+          <ProductItem
+            key={idx}
+            id={product.id}
+            title={product.title}
+            isComplete={product.isComplete}
+          />
+        )),
+    [arrayForSort]
+  );
 
   return (
     <ul className="product-list">
@@ -44,14 +56,7 @@ function ProductList() {
         />
       )}
 
-      {arrayForSort.sort(sortProductList).map((product, idx) => (
-        <MemoizedProducts
-          key={idx}
-          id={product.id}
-          title={product.title}
-          isComplete={product.isComplete}
-        />
-      ))}
+      {sortedArrayByisComplete}
     </ul>
   );
 }

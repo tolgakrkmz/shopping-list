@@ -26,4 +26,3 @@ function ProductItem({ id, title, isComplete }) {
 }
 
 export default ProductItem;
-export const MemoizedProducts = React.memo(ProductItem);
