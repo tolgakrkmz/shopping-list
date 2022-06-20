@@ -8,7 +8,7 @@ import React, { useMemo } from "react";
 
 function ProductList() {
   const dispatch = useDispatch();
-  const productList = useSelector((state) => state.product);
+  const productList = useSelector((state) => state.product.shoppingList);
   let isAllProductsComplete = true;
 
   if (productList.find((e) => e.isComplete === false)) {
@@ -19,28 +19,9 @@ function ProductList() {
     dispatch(toggleCompleteAll());
   }
 
-  function sortProductList(a, b) {
-    if (a.isComplete < b.isComplete) {
-      return -1;
-    }
-    if (a.isComplete > b.isComplete) {
-      return 1;
-    }
-    return 0;
-  }
-
-  const sortedArrayByisComplete = useMemo(
+  const sortedProductList = useMemo(
     () =>
-      [...productList]
-        .sort(sortProductList)
-        .map((product, idx) => (
-          <ProductItem
-            key={idx}
-            id={product.id}
-            title={product.title}
-            isComplete={product.isComplete}
-          />
-        )),
+      [...productList].sort((a, b) => (a.isComplete > b.isComplete ? 1 : -1)),
     [productList]
   );
 
@@ -53,7 +34,14 @@ function ProductList() {
           checked={isAllProductsComplete}
         />
       )}
-      {sortedArrayByisComplete}
+      {sortedProductList.map((product, idx) => (
+        <ProductItem
+          key={idx}
+          id={product.id}
+          title={product.title}
+          isComplete={product.isComplete}
+        />
+      ))}
     </ul>
   );
 }

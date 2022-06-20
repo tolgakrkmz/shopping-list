@@ -3,7 +3,9 @@ import { nanoid } from "nanoid";
 
 const productSlice = createSlice({
   name: "product",
-  initialState: [],
+  initialState: {
+    shoppingList: [],
+  },
   reducers: {
     addProduct: (state, action) => {
       const productItem = {
@@ -11,21 +13,23 @@ const productSlice = createSlice({
         title: action.payload.title,
         isComplete: false,
       };
-      state.push(productItem);
+      state.shoppingList.push(productItem);
     },
     toggleComplete: (state, action) => {
-      const idx = state.findIndex(
+      const idx = state.shoppingList.findIndex(
         (product) => product.id === action.payload.id
       );
-      state[idx].isComplete = action.payload.isComplete;
+      state.shoppingList[idx].isComplete = action.payload.isComplete;
     },
     toggleCompleteAll: (state) => {
       // STEP 1: Find if every product is complete
-      const isCheckAll = state.every((value) => value.isComplete === true);
+      const isAllComplete = state.shoppingList.every(
+        (value) => value.isComplete === true
+      );
 
-      // STEP 2: If all are checked, Mark All
-      for (let i = 0; i < state.length; i++) {
-        state[i].isComplete = !isCheckAll;
+      // STEP 2: If every product is check as complete, on click uncheck all products.
+      for (let i = 0; i < state.shoppingList.length; i++) {
+        state.shoppingList[i].isComplete = !isAllComplete;
       }
     },
   },
