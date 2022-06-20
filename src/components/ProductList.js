@@ -29,11 +29,9 @@ function ProductList() {
     return 0;
   }
 
-  const arrayForSort = React.useMemo(() => [...productList], [productList]);
-
-  let sortedArrayByisComplete = useMemo(
+  const sortedArrayByisComplete = useMemo(
     () =>
-      arrayForSort
+      [...productList]
         .sort(sortProductList)
         .map((product, idx) => (
           <ProductItem
@@ -43,7 +41,7 @@ function ProductList() {
             isComplete={product.isComplete}
           />
         )),
-    [arrayForSort]
+    [productList]
   );
 
   return (
@@ -55,7 +53,6 @@ function ProductList() {
           checked={isAllProductsComplete}
         />
       )}
-
       {sortedArrayByisComplete}
     </ul>
   );
