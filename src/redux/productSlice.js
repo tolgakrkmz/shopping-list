@@ -27,7 +27,8 @@ const productSlice = createSlice({
         (value) => value.isComplete === true
       );
 
-      // STEP 2: If every product is check as complete, on click uncheck all products.
+      // STEP 2: If every product is complete -> mark all of them incomplete.
+      //         If even one of them is incomplete -> mark all of them complete.
       for (let i = 0; i < state.shoppingList.length; i++) {
         state.shoppingList[i].isComplete = !isAllComplete;
       }

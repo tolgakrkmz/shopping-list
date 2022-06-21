@@ -6,7 +6,7 @@ import { InputGroup, FormControl, Button } from "react-bootstrap";
 import "./ProductAddForm.css";
 
 function ProductAddForm() {
-  const [value, setValue] = useState();
+  const [value, setValue] = useState("");
   const dispatch = useDispatch();
 
   function handleSubmit(event) {

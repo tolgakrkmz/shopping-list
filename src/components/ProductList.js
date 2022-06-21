@@ -9,11 +9,9 @@ import React, { useMemo } from "react";
 function ProductList() {
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.product.shoppingList);
-  let isAllProductsComplete = true;
-
-  if (productList.find((e) => e.isComplete === false)) {
-    isAllProductsComplete = false;
-  }
+  const isAllProductsComplete = productList.every(
+    (value) => value.isComplete === true
+  );
 
   function handleMarkAll() {
     dispatch(toggleCompleteAll());
@@ -34,9 +32,9 @@ function ProductList() {
           checked={isAllProductsComplete}
         />
       )}
-      {sortedProductList.map((product, idx) => (
+      {sortedProductList.map((product) => (
         <ProductItem
-          key={idx}
+          key={product.id}
           id={product.id}
           title={product.title}
           isComplete={product.isComplete}
