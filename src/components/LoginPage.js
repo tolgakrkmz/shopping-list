@@ -1,24 +1,28 @@
 import React from "react";
 import GoogleButton from "react-google-button";
-import { auth } from "../firebase/firebase";
-import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { useDispatch } from "react-redux";
-import { setLoggedUser } from "../redux/userSlice";
+import { firebaseApp } from "../firebase/firebase";
+import {
+  signInWithPopup,
+  GoogleAuthProvider,
+  setPersistence,
+  browserLocalPersistence,
+  getAuth,
+} from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 function LoginPage() {
-  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   function signInWithGoogle() {
     const google_provider = new GoogleAuthProvider();
-    signInWithPopup(auth, google_provider)
-      .then((result) => {
-        dispatch(
-          setLoggedUser({
-            userName: result.user.displayName,
-            userEmail: result.user.email,
-            userIsLogged: true,
-          })
-        );
+    const auth = getAuth(firebaseApp);
+
+    setPersistence(auth, browserLocalPersistence)
+      .then(() => {
+        return signInWithPopup(auth, google_provider);
+      })
+      .then(() => {
+        navigate("/");
       })
       .catch((error) => {
         alert(error);

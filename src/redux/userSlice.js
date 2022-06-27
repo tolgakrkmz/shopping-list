@@ -5,13 +5,13 @@ const userSlice = createSlice({
   initialState: {
     userName: null,
     userEmail: null,
-    userIsLogged: false,
+    isLogged: false,
   },
   reducers: {
     setLoggedUser: (state, action) => {
       state.userName = action.payload.userName;
       state.userEmail = action.payload.userEmail;
-      state.userIsLogged = action.payload.isLogged;
+      state.isLogged = action.payload.isLogged;
     },
   },
 });
