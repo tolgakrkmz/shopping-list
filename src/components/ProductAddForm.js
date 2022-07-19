@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addProduct } from "../redux/productSlice";
 import { InputGroup, FormControl, Button } from "react-bootstrap";
+import { db } from "../firebase/firebase";
+import { doc, setDoc } from "firebase/firestore";
+import { nanoid } from "nanoid";
 
 import "./ProductAddForm.css";
 
@@ -9,13 +12,19 @@ function ProductAddForm() {
   const [value, setValue] = useState("");
   const dispatch = useDispatch();
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
 
     if (value !== "") {
+      const productItem = {
+        id: nanoid(),
+        title: value,
+        isComplete: false,
+      };
+      await setDoc(doc(db, "shopping-lists", productItem.id), productItem);
       dispatch(
         addProduct({
-          title: value,
+          productItem,
         })
       );
       setValue("");
@@ -30,7 +39,9 @@ function ProductAddForm() {
         value={value}
         onChange={(event) => setValue(event.target.value)}
       />
-      <Button onClick={handleSubmit}>Add</Button>
+      <Button onClick={handleSubmit} disabled={!value}>
+        Add
+      </Button>
     </InputGroup>
   );
 }

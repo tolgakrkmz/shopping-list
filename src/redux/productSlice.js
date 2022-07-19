@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { nanoid } from "nanoid";
 
 const productSlice = createSlice({
   name: "product",
@@ -8,12 +7,7 @@ const productSlice = createSlice({
   },
   reducers: {
     addProduct: (state, action) => {
-      const productItem = {
-        id: nanoid(),
-        title: action.payload.title,
-        isComplete: false,
-      };
-      state.shoppingList.push(productItem);
+      state.shoppingList.push(action.payload.productItem);
     },
     toggleComplete: (state, action) => {
       const idx = state.shoppingList.findIndex(
