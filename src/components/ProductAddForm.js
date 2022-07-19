@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addProduct } from "../redux/productSlice";
 import { InputGroup, FormControl, Button } from "react-bootstrap";
 import { db } from "../firebase/firebase";
@@ -11,6 +11,7 @@ import "./ProductAddForm.css";
 function ProductAddForm() {
   const [value, setValue] = useState("");
   const dispatch = useDispatch();
+  const userEmail = useSelector((state) => state.user.userEmail);
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -20,6 +21,7 @@ function ProductAddForm() {
         id: nanoid(),
         title: value,
         isComplete: false,
+        email: userEmail,
       };
       await setDoc(doc(db, "shopping-lists", productItem.id), productItem);
       dispatch(
