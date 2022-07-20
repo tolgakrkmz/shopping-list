@@ -13,7 +13,6 @@ function ProductItem({ id, title, isComplete }) {
     dispatch(toggleComplete({ id, isComplete: !isComplete }));
     const documentRef = doc(db, "shopping-lists", id);
 
-    // Set the "capital" field of the city 'DC'
     updateDoc(documentRef, {
       isComplete: !isComplete,
     });
