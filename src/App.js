@@ -6,15 +6,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getAuth } from "firebase/auth";
 import { db, firebaseApp } from "./firebase/firebase";
-import { collection, onSnapshot } from "firebase/firestore";
+import { doc, getDoc, getDocs, collection } from "firebase/firestore";
 import { setLoggedUser } from "./redux/userSlice";
-import { fetchData } from "./redux/productSlice";
+import { getData } from "./redux/productSlice";
 import { useNavigate } from "react-router-dom";
 
 function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userIsLogged = useSelector((state) => state.user.isLogged);
+  const productList = useSelector((state) => state.product.shoppingList);
 
   useEffect(() => {
     const auth = getAuth(firebaseApp);
@@ -27,19 +28,20 @@ function App() {
         })
       );
       navigate("/", { replace: true });
-      let fetchedData = [];
-      onSnapshot(collection(db, "shopping-lists"), (snapshot) => {
-        const data = snapshot.docs.map((doc) => doc.data());
-
-        for (let i = 0; i < data.length; i++) {
-          const element = data[i];
-          fetchedData = Object.assign([], fetchedData);
-          fetchedData.push(element);
-          dispatch(fetchData(fetchedData));
-        }
-      });
     });
+    fetchShoppingList();
   }, []);
+
+  async function fetchShoppingList() {
+    if (productList !== null) {
+      let fetchedData = [];
+      const snapshot = await getDocs(collection(db, "shopping-lists"));
+      snapshot.forEach((doc) => {
+        fetchedData.push(doc.data());
+      });
+      dispatch(getData(fetchedData));
+    }
+  }
 
   return (
     <Routes>

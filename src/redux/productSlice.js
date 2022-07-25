@@ -27,13 +27,13 @@ const productSlice = createSlice({
         state.shoppingList[i].isComplete = !isAllComplete;
       }
     },
-    fetchData: (state, action) => {
+    getData: (state, action) => {
       state.shoppingList = action.payload;
     },
   },
 });
 
-export const { addProduct, toggleComplete, toggleCompleteAll, fetchData } =
+export const { addProduct, toggleComplete, toggleCompleteAll, getData } =
   productSlice.actions;
 
 export default productSlice.reducer;
