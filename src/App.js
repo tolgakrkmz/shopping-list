@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getAuth } from "firebase/auth";
 import { db, firebaseApp } from "./firebase/firebase";
-import { collection, onSnapshot, getDocs } from "firebase/firestore";
+import { collection, onSnapshot } from "firebase/firestore";
 import { setLoggedUser } from "./redux/userSlice";
 import { getData } from "./redux/productSlice";
 import { useNavigate } from "react-router-dom";
@@ -15,7 +15,6 @@ function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userIsLogged = useSelector((state) => state.user.isLogged);
-  const productList = useSelector((state) => state.product.shoppingList);
 
   useEffect(() => {
     const auth = getAuth(firebaseApp);
@@ -32,11 +31,12 @@ function App() {
     fetchShoppingList();
   }, []);
 
+  //Fetch data from Firestore
   async function fetchShoppingList() {
     let fetchedData = [];
-    const dbRef = collection(db, "shopping-lists");
+    const shoppingListRef = collection(db, "shopping-lists");
 
-    onSnapshot(dbRef, (snapshot) => {
+    onSnapshot(shoppingListRef, (snapshot) => {
       let shallowFetchedData = [...fetchedData];
       snapshot.forEach((doc) => {
         shallowFetchedData.push(doc.data());

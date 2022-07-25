@@ -28,6 +28,7 @@ function LoginPage() {
         alert(error);
       });
   }
+
   return <GoogleButton onClick={signInWithGoogle} />;
 }
 
