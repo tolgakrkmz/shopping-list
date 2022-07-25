@@ -1,5 +1,5 @@
 import React from "react";
-import GoogleButton from "react-google-button";
+import Button from "react-bootstrap/Button";
 import { firebaseApp } from "../firebase/firebase";
 import {
   signInWithPopup,
@@ -13,11 +13,11 @@ import { useNavigate } from "react-router-dom";
 function LoginPage() {
   const navigate = useNavigate();
 
-  function signInWithGoogle() {
+  async function signInWithGoogle() {
     const google_provider = new GoogleAuthProvider();
     const auth = getAuth(firebaseApp);
 
-    setPersistence(auth, browserLocalPersistence)
+    await setPersistence(auth, browserLocalPersistence)
       .then(() => {
         return signInWithPopup(auth, google_provider);
       })
@@ -28,7 +28,11 @@ function LoginPage() {
         alert(error);
       });
   }
-  return <GoogleButton onClick={signInWithGoogle} />;
+  return (
+    <Button variant="primary" size="lg" active onClick={signInWithGoogle}>
+      Login \w Google
+    </Button>
+  );
 }
 
 export default LoginPage;
