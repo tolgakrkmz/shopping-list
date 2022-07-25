@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getAuth } from "firebase/auth";
 import { db, firebaseApp } from "./firebase/firebase";
-import { doc, getDoc, getDocs, collection } from "firebase/firestore";
+import { collection, onSnapshot, getDocs } from "firebase/firestore";
 import { setLoggedUser } from "./redux/userSlice";
 import { getData } from "./redux/productSlice";
 import { useNavigate } from "react-router-dom";
@@ -33,14 +33,16 @@ function App() {
   }, []);
 
   async function fetchShoppingList() {
-    if (productList !== null) {
-      let fetchedData = [];
-      const snapshot = await getDocs(collection(db, "shopping-lists"));
+    let fetchedData = [];
+    const dbRef = collection(db, "shopping-lists");
+
+    onSnapshot(dbRef, (snapshot) => {
+      let shallowFetchedData = [...fetchedData];
       snapshot.forEach((doc) => {
-        fetchedData.push(doc.data());
+        shallowFetchedData.push(doc.data());
       });
-      dispatch(getData(fetchedData));
-    }
+      dispatch(getData(shallowFetchedData));
+    });
   }
 
   return (
