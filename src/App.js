@@ -30,19 +30,21 @@ function App() {
   }, []);
 
   return (
-    <Routes>
-      <Route
-        path="/shopping-list"
-        element={
-          <PrivateRoute isLogged={userIsLogged}>
-            <MainNavbar />
-            <ShoppingListPage />
-          </PrivateRoute>
-        }
-      />
-      <Route path="/" element={<Navigate to="/shopping-list" />} />
-      <Route path="/login" element={<LoginPage />} />
-    </Routes>
+    <>
+      <MainNavbar />
+      <Routes>
+        <Route
+          path="/shopping-list"
+          element={
+            <PrivateRoute>
+              <ShoppingListPage />
+            </PrivateRoute>
+          }
+        />
+        <Route path="/" element={<Navigate to="/shopping-list" />} />
+        <Route path="/login" element={<LoginPage />} />
+      </Routes>
+    </>
   );
 }
 

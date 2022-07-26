@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 function LoginPage() {
   const navigate = useNavigate();
 
-  async function signInWithGoogle() {
+  async function handleSignInWithGoogleButtonClick() {
     const google_provider = new GoogleAuthProvider();
     const auth = getAuth(firebaseApp);
 
@@ -29,7 +29,12 @@ function LoginPage() {
       });
   }
   return (
-    <Button variant="primary" size="lg" active onClick={signInWithGoogle}>
+    <Button
+      variant="primary"
+      size="lg"
+      active
+      onClick={handleSignInWithGoogleButtonClick}
+    >
       Login \w Google
     </Button>
   );
