@@ -5,10 +5,8 @@ import PrivateRoutes from "./utils/PrivateRoutes";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getAuth } from "firebase/auth";
-import { db, firebaseApp } from "./firebase/firebase";
-import { collection, onSnapshot } from "firebase/firestore";
+import { firebaseApp } from "./firebase/firebase";
 import { setLoggedUser } from "./redux/userSlice";
-import { getData } from "./redux/productSlice";
 import { useNavigate } from "react-router-dom";
 
 function App() {
@@ -28,22 +26,7 @@ function App() {
       );
       navigate("/", { replace: true });
     });
-    fetchShoppingList();
   }, []);
-
-  //Fetch data from Firestore
-  async function fetchShoppingList() {
-    let fetchedData = [];
-    const shoppingListRef = collection(db, "shopping-lists");
-
-    onSnapshot(shoppingListRef, (snapshot) => {
-      let shallowFetchedData = [...fetchedData];
-      snapshot.forEach((doc) => {
-        shallowFetchedData.push(doc.data());
-      });
-      dispatch(getData(shallowFetchedData));
-    });
-  }
 
   return (
     <Routes>

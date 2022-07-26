@@ -1,6 +1,6 @@
 import React from "react";
 import GoogleButton from "react-google-button";
-import { firebaseApp } from "../firebase/firebase";
+import { db, firebaseApp } from "../firebase/firebase";
 import {
   signInWithPopup,
   GoogleAuthProvider,
@@ -9,6 +9,7 @@ import {
   getAuth,
 } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import { addDoc, collection } from "firebase/firestore";
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -20,6 +21,12 @@ function LoginPage() {
     setPersistence(auth, browserLocalPersistence)
       .then(() => {
         return signInWithPopup(auth, google_provider);
+      })
+      .then((cred) => {
+        const usersRef = collection(db, "users");
+        addDoc(usersRef, {
+          name: cred.user.displayName,
+        });
       })
       .then(() => {
         navigate("/");
