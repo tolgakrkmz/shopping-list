@@ -19,6 +19,7 @@ function MainNavbar() {
             <Link to="/shopping-list">My List</Link>
           </Navbar.Text>
         )}
+
         <Navbar.Toggle />
         <Navbar.Collapse className="justify-content-end">
           {isUserLogged ? (

@@ -14,12 +14,12 @@ function LoginPage() {
   const navigate = useNavigate();
 
   async function handleSignInWithGoogleButtonClick() {
-    const google_provider = new GoogleAuthProvider();
+    const googleProvider = new GoogleAuthProvider();
     const auth = getAuth(firebaseApp);
 
-    await setPersistence(auth, browserLocalPersistence);
     try {
-      await signInWithPopup(auth, google_provider);
+      await setPersistence(auth, browserLocalPersistence);
+      await signInWithPopup(auth, googleProvider);
       navigate("/");
     } catch (error) {
       alert(error);
