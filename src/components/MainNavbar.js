@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 function MainNavbar() {
-  const userIsLogged = useSelector((state) => state.user.isLogged);
-  const firstName = useSelector((state) => state.user.userName);
+  const isUserLogged = useSelector((state) => state.user.isLogged);
+  const userName = useSelector((state) => state.user.userName);
 
   return (
     <Navbar>
@@ -13,18 +13,17 @@ function MainNavbar() {
         <Navbar.Text>
           <Link to="/shopping-list">Shopping List</Link>
         </Navbar.Text>
-        /
-        {userIsLogged && (
+
+        {isUserLogged && (
           <Navbar.Text>
-            <Link to="">My List</Link>
+            <Link to="/shopping-list">My List</Link>
           </Navbar.Text>
         )}
+
         <Navbar.Toggle />
         <Navbar.Collapse className="justify-content-end">
-          {userIsLogged ? (
-            <Navbar.Text>
-              <p>{firstName}</p>
-            </Navbar.Text>
+          {isUserLogged ? (
+            <Navbar.Text>{userName}</Navbar.Text>
           ) : (
             <Navbar.Text>
               <Link to="/login">Login</Link>

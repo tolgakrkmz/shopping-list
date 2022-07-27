@@ -6,7 +6,6 @@ import { collection, query, where, getDocs } from "firebase/firestore";
 import { useDispatch, useSelector } from "react-redux";
 import ProductAddForm from "./ProductAddForm";
 import ProductList from "./ProductList";
-import MainNavbar from "./MainNavbar";
 
 function ShoppingListPage() {
   const dispatch = useDispatch();
@@ -32,7 +31,6 @@ function ShoppingListPage() {
 
   return (
     <>
-      <MainNavbar />
       <ProductAddForm />
       <ProductList />
     </>
