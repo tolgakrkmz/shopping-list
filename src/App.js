@@ -13,7 +13,6 @@ import MainNavbar from "./components/MainNavbar";
 function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const userIsLogged = useSelector((state) => state.user.isLogged);
 
   useEffect(() => {
     const auth = getAuth(firebaseApp);
