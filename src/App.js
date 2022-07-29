@@ -9,6 +9,7 @@ import { firebaseApp } from "./firebase/firebase";
 import { setLoggedUser } from "./redux/userSlice";
 import { useNavigate } from "react-router-dom";
 import MainNavbar from "./components/MainNavbar";
+import ProductsPage from "./components/ProductsPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -40,6 +41,15 @@ function App() {
             </PrivateRoute>
           }
         />
+        <Route
+          path="/products"
+          element={
+            <PrivateRoute>
+              <ProductsPage />
+            </PrivateRoute>
+          }
+        />
+
         <Route path="/" element={<Navigate to="/shopping-list" />} />
         <Route path="/login" element={<LoginPage />} />
       </Routes>

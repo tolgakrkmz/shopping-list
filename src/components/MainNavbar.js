@@ -13,13 +13,18 @@ function MainNavbar() {
         <Navbar.Text>
           <Link to="/shopping-list">Shopping List</Link>
         </Navbar.Text>
-
+        &nbsp;
         {isUserLogged && (
           <Navbar.Text>
             <Link to="/shopping-list">My List</Link>
           </Navbar.Text>
         )}
-
+        &nbsp;
+        {isUserLogged && (
+          <Navbar.Text>
+            <Link to="/products">Products</Link>
+          </Navbar.Text>
+        )}
         <Navbar.Toggle />
         <Navbar.Collapse className="justify-content-end">
           {isUserLogged ? (

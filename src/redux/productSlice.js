@@ -27,13 +27,25 @@ const productSlice = createSlice({
         state.shoppingList[i].isComplete = !isAllComplete;
       }
     },
+    deleteProduct: (state, action) => {
+      return {
+        shoppingList: state.shoppingList.filter(
+          (product) => product.id !== action.payload.id
+        ),
+      };
+    },
     getData: (state, action) => {
       state.shoppingList = action.payload;
     },
   },
 });
 
-export const { addProduct, toggleComplete, toggleCompleteAll, getData } =
-  productSlice.actions;
+export const {
+  addProduct,
+  toggleComplete,
+  toggleCompleteAll,
+  getData,
+  deleteProduct,
+} = productSlice.actions;
 
 export default productSlice.reducer;
