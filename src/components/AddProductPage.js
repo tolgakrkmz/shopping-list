@@ -1,0 +1,50 @@
+import React, { useState } from "react";
+import { InputGroup, FormControl, Button } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { doc, setDoc } from "firebase/firestore";
+import { nanoid } from "nanoid";
+import { addCommonProduct } from "../redux/productSlice";
+import { db } from "../firebase/firebase";
+import { useNavigate } from "react-router-dom";
+function AddProductPage() {
+  const [title, setTitle] = useState("");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const userEmail = useSelector((state) => state.user.userEmail);
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+
+    if (title !== "") {
+      const commonProducts = {
+        id: nanoid(),
+        title: title,
+        email: userEmail,
+      };
+      await setDoc(doc(db, "products", commonProducts.id), commonProducts);
+      dispatch(
+        addCommonProduct({
+          commonProducts,
+        })
+      );
+      setTitle("");
+      navigate("/products");
+    }
+  }
+
+  return (
+    <InputGroup size="sm" className="mb-3">
+      <FormControl
+        aria-label="Small"
+        placeholder="Type you product"
+        value={title}
+        onChange={(event) => setTitle(event.target.value)}
+      />
+      <Button onClick={handleSubmit} disabled={!title}>
+        Add
+      </Button>
+    </InputGroup>
+  );
+}
+
+export default AddProductPage;

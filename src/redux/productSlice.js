@@ -4,6 +4,7 @@ const productSlice = createSlice({
   name: "product",
   initialState: {
     shoppingList: [],
+    commonProducts: [],
   },
   reducers: {
     addProduct: (state, action) => {
@@ -29,13 +30,19 @@ const productSlice = createSlice({
     },
     deleteProduct: (state, action) => {
       return {
-        shoppingList: state.shoppingList.filter(
+        commonProducts: state.commonProducts.filter(
           (product) => product.id !== action.payload.id
         ),
       };
     },
     getData: (state, action) => {
       state.shoppingList = action.payload;
+    },
+    addCommonProduct: (state, action) => {
+      state.commonProducts.push(action.payload.commonProducts);
+    },
+    fetchCommonProduct: (state, action) => {
+      state.commonProducts = action.payload;
     },
   },
 });
@@ -46,6 +53,8 @@ export const {
   toggleCompleteAll,
   getData,
   deleteProduct,
+  addCommonProduct,
+  fetchCommonProduct,
 } = productSlice.actions;
 
 export default productSlice.reducer;
