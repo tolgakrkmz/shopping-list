@@ -19,12 +19,11 @@ function ShoppingListPage() {
         where("email", "==", userEmail)
       );
       const querySnapshot = await getDocs(q);
-      let shallowFetchedData = [...fetchedData];
 
       querySnapshot.forEach((doc) => {
-        shallowFetchedData.push(doc.data());
+        fetchedData.push(doc.data());
       });
-      dispatch(getData(shallowFetchedData));
+      dispatch(getData(fetchedData));
     }
     fetchShoppingList();
   }, []);

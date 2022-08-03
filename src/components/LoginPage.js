@@ -8,6 +8,7 @@ import {
   getAuth,
 } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import { firebaseApp } from "../firebase/firebase";
 
 function LoginPage() {
   const navigate = useNavigate();
