@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addProduct } from "../redux/productSlice";
+import { addNewProduct } from "../redux/productSlice";
 import { InputGroup, FormControl, Button } from "react-bootstrap";
 import { db } from "../firebase/firebase";
 import { doc, setDoc } from "firebase/firestore";
@@ -25,7 +25,7 @@ function ProductAddForm() {
       };
       await setDoc(doc(db, "shopping-lists", productItem.id), productItem);
       dispatch(
-        addProduct({
+        addNewProduct({
           productItem,
         })
       );

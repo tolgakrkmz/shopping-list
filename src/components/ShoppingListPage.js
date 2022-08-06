@@ -1,8 +1,6 @@
 import React from "react";
 import { useEffect } from "react";
-import { getData } from "../redux/productSlice";
-import { db } from "../firebase/firebase";
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { fetchProducts } from "../redux/productSlice";
 import { useDispatch, useSelector } from "react-redux";
 import ProductAddForm from "./ProductAddForm";
 import ProductList from "./ProductList";
@@ -12,20 +10,7 @@ function ShoppingListPage() {
   const userEmail = useSelector((state) => state.user.userEmail);
 
   useEffect(() => {
-    async function fetchShoppingList() {
-      let fetchedData = [];
-      const q = query(
-        collection(db, "shopping-lists"),
-        where("email", "==", userEmail)
-      );
-      const querySnapshot = await getDocs(q);
-
-      querySnapshot.forEach((doc) => {
-        fetchedData.push(doc.data());
-      });
-      dispatch(getData(fetchedData));
-    }
-    fetchShoppingList();
+    dispatch(fetchProducts(userEmail));
   }, []);
 
   return (

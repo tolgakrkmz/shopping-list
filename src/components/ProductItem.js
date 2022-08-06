@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import React from "react";
-import { toggleComplete } from "../redux/productSlice";
+import { toggleCompleteProduct } from "../redux/productSlice";
 import { Form } from "react-bootstrap";
 import "./ProductItem.css";
 import { doc, updateDoc } from "firebase/firestore";
@@ -10,7 +10,8 @@ function ProductItem({ id, title, isComplete }) {
   const dispatch = useDispatch();
 
   function handleCheckboxChange() {
-    dispatch(toggleComplete({ id, isComplete: !isComplete }));
+    dispatch(toggleCompleteProduct({ id, isComplete }));
+
     const documentRef = doc(db, "shopping-lists", id);
 
     updateDoc(documentRef, {

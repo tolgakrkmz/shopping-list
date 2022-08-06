@@ -1,39 +1,73 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { db } from "../firebase/firebase";
+import { collection, query, where, getDocs } from "firebase/firestore";
+
+export const fetchProducts = createAsyncThunk(
+  "product/fetchProducts",
+  async (userEmail) => {
+    const q = query(
+      collection(db, "shopping-lists"),
+      where("email", "==", userEmail)
+    );
+    const querySnapshot = await getDocs(q);
+    const data = [];
+    querySnapshot.forEach((doc) => {
+      data.push(doc.data());
+    });
+    return data;
+  }
+);
+
+export const addNewProduct = createAsyncThunk(
+  "product/addNewProduct",
+  async (productItem) => {
+    const product = { productItem };
+    return product.title;
+  }
+);
+
+export const toggleCompleteProduct = createAsyncThunk(
+  "product/toggleCompleteProduct",
+  async ({ id, isComplete }) => {
+    const toggleComplete = { id, isComplete: !isComplete };
+    return toggleComplete;
+  }
+);
+
+export const toggleCompleteAllProducts = createAsyncThunk(
+  "product/toggleCompleteAllProducts",
+  async () => {}
+);
 
 const productSlice = createSlice({
   name: "product",
   initialState: {
     shoppingList: [],
   },
-  reducers: {
-    addProduct: (state, action) => {
-      state.shoppingList.push(action.payload.productItem);
-    },
-    toggleComplete: (state, action) => {
+  extraReducers: (builder) => {
+    builder.addCase(fetchProducts.fulfilled, (state, action) => {
+      state.shoppingList = action.payload;
+    });
+    builder.addCase(addNewProduct.fulfilled, (state, action) => {
+      state.shoppingList.push(action.payload);
+    });
+    builder.addCase(toggleCompleteProduct.fulfilled, (state, action) => {
       const idx = state.shoppingList.findIndex(
         (product) => product.id === action.payload.id
       );
       state.shoppingList[idx].isComplete = action.payload.isComplete;
-    },
-    toggleCompleteAll: (state) => {
-      // STEP 1: Find if every product is complete
+    });
+    builder.addCase(toggleCompleteAllProducts.fulfilled, (state) => {
       const isAllComplete = state.shoppingList.every(
         (value) => value.isComplete === true
       );
-
       // STEP 2: If every product is complete -> mark all of them incomplete.
       //         If even one of them is incomplete -> mark all of them complete.
       for (let i = 0; i < state.shoppingList.length; i++) {
         state.shoppingList[i].isComplete = !isAllComplete;
       }
-    },
-    getData: (state, action) => {
-      state.shoppingList = action.payload;
-    },
+    });
   },
 });
-
-export const { addProduct, toggleComplete, toggleCompleteAll, getData } =
-  productSlice.actions;
 
 export default productSlice.reducer;
