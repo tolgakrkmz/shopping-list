@@ -39,7 +39,7 @@ const productSlice = createSlice({
       state.shoppingList = action.payload;
     },
     addCommonProduct: (state, action) => {
-      state.commonProducts.push(action.payload.commonProducts);
+      state.commonProducts.push(action.payload);
     },
     fetchCommonProduct: (state, action) => {
       state.commonProducts = action.payload;

@@ -22,12 +22,11 @@ function ProductsPage() {
         where("email", "==", userEmail)
       );
       const querySnapshot = await getDocs(q);
-      let shallowCommonProduct = [...commonProductData];
 
       querySnapshot.forEach((doc) => {
-        shallowCommonProduct.push(doc.data());
+        commonProductData.push(doc.data());
       });
-      dispatch(fetchCommonProduct(shallowCommonProduct));
+      dispatch(fetchCommonProduct(commonProductData));
     }
     getCommonProduct();
   }, []);
@@ -37,9 +36,14 @@ function ProductsPage() {
     dispatch(deleteProduct({ id: id }));
   }
 
+  // STEP 3: Handle 'Add product' button click.
+  function handleAddProductButtonClick() {
+    navigate("/addproduct");
+  }
+
   return (
     <>
-      <Button variant="success" onClick={() => navigate("/addproduct")}>
+      <Button variant="primary" onClick={handleAddProductButtonClick}>
         Add Product
       </Button>
       <ul>
