@@ -44,11 +44,17 @@ export const toggleCompleteAllProducts = createAsyncThunk(
   async () => {
     const querySnapshot = await getDocs(collection(db, "shopping-lists"));
     querySnapshot.forEach((document) => {
-      const isComplete = document.data().isComplete;
+      const isCompleteProduct = document.data().isComplete;
       const documentRef = doc(db, "shopping-lists", document.id);
-      updateDoc(documentRef, {
-        isComplete: !isComplete,
-      });
+      if (isCompleteProduct) {
+        updateDoc(documentRef, {
+          isComplete: false,
+        });
+      } else {
+        updateDoc(documentRef, {
+          isComplete: true,
+        });
+      }
     });
   }
 );
