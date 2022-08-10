@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addNewProduct } from "../redux/productSlice";
 import { InputGroup, FormControl, Button } from "react-bootstrap";
-import { db } from "../firebase/firebase";
-import { doc, setDoc } from "firebase/firestore";
 import { nanoid } from "nanoid";
 
 import "./ProductAddForm.css";
@@ -23,12 +21,7 @@ function ProductAddForm() {
         isComplete: false,
         email: userEmail,
       };
-      await setDoc(doc(db, "shopping-lists", productItem.id), productItem);
-      dispatch(
-        addNewProduct({
-          productItem,
-        })
-      );
+      dispatch(addNewProduct(productItem));
       setValue("");
     }
   }

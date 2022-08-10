@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { db } from "../firebase/firebase";
 import { collection, query, where, getDocs } from "firebase/firestore";
+import { doc, setDoc, updateDoc } from "firebase/firestore";
 
 export const fetchProducts = createAsyncThunk(
   "product/fetchProducts",
@@ -21,14 +22,18 @@ export const fetchProducts = createAsyncThunk(
 export const addNewProduct = createAsyncThunk(
   "product/addNewProduct",
   async (productItem) => {
-    const product = { productItem };
-    return product.title;
+    await setDoc(doc(db, "shopping-lists", productItem.id), productItem);
+    return productItem;
   }
 );
 
 export const toggleCompleteProduct = createAsyncThunk(
   "product/toggleCompleteProduct",
   async ({ id, isComplete }) => {
+    const documentRef = doc(db, "shopping-lists", id);
+    updateDoc(documentRef, {
+      isComplete: !isComplete,
+    });
     const toggleComplete = { id, isComplete: !isComplete };
     return toggleComplete;
   }
@@ -36,7 +41,16 @@ export const toggleCompleteProduct = createAsyncThunk(
 
 export const toggleCompleteAllProducts = createAsyncThunk(
   "product/toggleCompleteAllProducts",
-  async () => {}
+  async () => {
+    const querySnapshot = await getDocs(collection(db, "shopping-lists"));
+    querySnapshot.forEach((document) => {
+      const isComplete = document.data().isComplete;
+      const documentRef = doc(db, "shopping-lists", document.id);
+      updateDoc(documentRef, {
+        isComplete: !isComplete,
+      });
+    });
+  }
 );
 
 const productSlice = createSlice({
@@ -58,6 +72,7 @@ const productSlice = createSlice({
       state.shoppingList[idx].isComplete = action.payload.isComplete;
     });
     builder.addCase(toggleCompleteAllProducts.fulfilled, (state) => {
+      // STEP 1: Find if every product is complete
       const isAllComplete = state.shoppingList.every(
         (value) => value.isComplete === true
       );
