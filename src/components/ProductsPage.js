@@ -13,7 +13,7 @@ function ProductsPage() {
   const commonProducts = useSelector((state) => state.product.commonProducts);
   const userEmail = useSelector((state) => state.user.userEmail);
 
-  // STEP 1: Fetch data from 'Products' collection in Firestore
+  // STEP 1: Fetch data from 'Products' collection from Firestore
   useEffect(() => {
     async function getCommonProduct() {
       let commonProductData = [];

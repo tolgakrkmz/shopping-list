@@ -23,8 +23,7 @@ function ProductItem({ id, title, isComplete }) {
 
   async function handleSaveProductButtonClick(id) {
     const selectedProduct = productList.find((product) => product.id === id);
-    console.log(selectedProduct.id);
-
+    console.log(selectedProduct);
     await setDoc(doc(db, "products", selectedProduct.id), selectedProduct);
     dispatch(addCommonProduct(selectedProduct));
   }

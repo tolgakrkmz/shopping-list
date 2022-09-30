@@ -12,8 +12,8 @@ function AddProductPage() {
   const navigate = useNavigate();
   const userEmail = useSelector((state) => state.user.userEmail);
 
-  async function handleSubmit(event) {
-    event.preventDefault();
+  async function handleAddProductButtonClick(e) {
+    e.preventDefault();
 
     if (title !== "") {
       const commonProducts = {
@@ -40,7 +40,7 @@ function AddProductPage() {
         value={title}
         onChange={(event) => setTitle(event.target.value)}
       />
-      <Button onClick={handleSubmit} disabled={!title}>
+      <Button onClick={handleAddProductButtonClick} disabled={!title}>
         Add
       </Button>
     </InputGroup>
