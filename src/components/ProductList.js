@@ -3,7 +3,7 @@ import ProductItem from "./ProductItem";
 import { Form } from "react-bootstrap";
 import "./ProductList.css";
 import { useDispatch } from "react-redux";
-import { toggleCompleteAll } from "../redux/productSlice.js";
+import { toggleCompleteAllProducts } from "../redux/productSlice.js";
 import React, { useMemo } from "react";
 
 function ProductList() {
@@ -14,7 +14,7 @@ function ProductList() {
   );
 
   function handleMarkAll() {
-    dispatch(toggleCompleteAll());
+    dispatch(toggleCompleteAllProducts());
   }
 
   const sortedProductList = useMemo(

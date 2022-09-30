@@ -1,23 +1,27 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { addProduct } from "../redux/productSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { addNewProduct } from "../redux/productSlice";
 import { InputGroup, FormControl, Button } from "react-bootstrap";
+import { nanoid } from "nanoid";
 
 import "./ProductAddForm.css";
 
 function ProductAddForm() {
   const [value, setValue] = useState("");
   const dispatch = useDispatch();
+  const userEmail = useSelector((state) => state.user.userEmail);
 
   function handleSubmit(event) {
     event.preventDefault();
 
     if (value !== "") {
-      dispatch(
-        addProduct({
-          title: value,
-        })
-      );
+      const productItem = {
+        id: nanoid(),
+        title: value,
+        isComplete: false,
+        email: userEmail,
+      };
+      dispatch(addNewProduct(productItem));
       setValue("");
     }
   }
@@ -30,7 +34,9 @@ function ProductAddForm() {
         value={value}
         onChange={(event) => setValue(event.target.value)}
       />
-      <Button onClick={handleSubmit}>Add</Button>
+      <Button onClick={handleSubmit} disabled={!value}>
+        Add
+      </Button>
     </InputGroup>
   );
 }
