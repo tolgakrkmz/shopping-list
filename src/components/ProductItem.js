@@ -1,6 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
 import React from "react";
-import { toggleCompleteProduct, addNewProduct } from "../redux/productSlice";
+import {
+  toggleCompleteProduct,
+  addNewCommonProduct,
+} from "../redux/productSlice";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../firebase/firebase";
 import Button from "react-bootstrap/Button";
@@ -18,7 +21,7 @@ function ProductItem({ id, title, isComplete }) {
   async function handleSaveProductButtonClick(id) {
     const selectedProduct = productList.find((product) => product.id === id);
     await setDoc(doc(db, "products", selectedProduct.id), selectedProduct);
-    dispatch(addNewProduct(selectedProduct));
+    dispatch(addNewCommonProduct(selectedProduct));
   }
 
   return (

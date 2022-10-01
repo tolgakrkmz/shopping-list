@@ -3,15 +3,17 @@ import Modal from "react-bootstrap/Modal";
 import { db } from "../firebase/firebase";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { addNewProduct } from "../redux/productSlice";
 
 function ChooseProductModal({ closeModal }) {
   const [modalData, setModalData] = useState([]);
   const userEmail = useSelector((state) => state.user.userEmail);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     async function fetchProductsForModal() {
-      let modalProducts = [];
+      const modalProducts = [];
       const q = query(
         collection(db, "products"),
         where("email", "==", userEmail)
@@ -31,7 +33,8 @@ function ChooseProductModal({ closeModal }) {
     const selectedProductInModal = modalData.find(
       (product) => product.id === id
     );
-    console.log(selectedProductInModal);
+    dispatch(addNewProduct(selectedProductInModal));
+    closeModal(false);
   }
 
   return (
@@ -49,7 +52,7 @@ function ChooseProductModal({ closeModal }) {
                 onClick={() => handleAddFromProductsButtonClick(product.id)}
                 variant="success"
               >
-                Add from Products
+                Add to Shopping List
               </Button>
             }
           </li>

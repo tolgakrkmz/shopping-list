@@ -5,6 +5,7 @@ import { fetchCommonProducts } from "../redux/productSlice";
 import { db } from "../firebase/firebase";
 import { doc, deleteDoc } from "firebase/firestore";
 import { useDispatch, useSelector } from "react-redux";
+import "./ProductsPage.css";
 
 function ProductsPage() {
   const navigate = useNavigate();
@@ -34,7 +35,7 @@ function ProductsPage() {
       <Button variant="primary" onClick={handleAddProductButtonClick}>
         Add Product
       </Button>
-      <ul>
+      <ul className="common-product-list">
         {commonProducts.map((product) => (
           <li key={product.id}>
             {product.title}

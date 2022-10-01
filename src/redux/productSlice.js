@@ -104,6 +104,9 @@ const productSlice = createSlice({
     builder.addCase(addNewProduct.fulfilled, (state, action) => {
       state.shoppingList.push(action.payload);
     });
+    builder.addCase(addNewCommonProduct.fulfilled, (state, action) => {
+      state.commonProducts.push(action.payload);
+    });
     builder.addCase(toggleCompleteProduct.fulfilled, (state, action) => {
       const idx = state.shoppingList.findIndex(
         (product) => product.id === action.payload.id
@@ -121,9 +124,6 @@ const productSlice = createSlice({
       for (let i = 0; i < state.shoppingList.length; i++) {
         state.shoppingList[i].isComplete = !isAllComplete;
       }
-    });
-    builder.addCase(addNewCommonProduct.fulfilled, (state, action) => {
-      state.commonProducts.push(action.payload);
     });
   },
 });
