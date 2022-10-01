@@ -23,17 +23,14 @@ function ChooseProductModal({ closeModal }) {
       querySnapshot.forEach((doc) => {
         modalProducts.push(doc.data());
       });
-      //setData to modal state
       setModalData(modalProducts);
     }
     fetchProductsForModal();
   }, [modalData]);
 
   function handleAddFromProductsButtonClick(id) {
-    const selectedProductInModal = modalData.find(
-      (product) => product.id === id
-    );
-    dispatch(addNewProduct(selectedProductInModal));
+    const productInModal = modalData.find((product) => product.id === id);
+    dispatch(addNewProduct(productInModal));
     closeModal(false);
   }
 
