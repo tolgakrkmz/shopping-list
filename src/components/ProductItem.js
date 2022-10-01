@@ -1,17 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import React from "react";
-<<<<<<< HEAD
-import { toggleComplete, addCommonProduct } from "../redux/productSlice";
-import { Form } from "react-bootstrap";
-import "./ProductItem.css";
-import { doc, updateDoc, setDoc } from "firebase/firestore";
+import { toggleCompleteProduct, addNewProduct } from "../redux/productSlice";
+import { doc, setDoc } from "firebase/firestore";
 import { db } from "../firebase/firebase";
 import Button from "react-bootstrap/Button";
-=======
-import { toggleCompleteProduct } from "../redux/productSlice";
 import { Form } from "react-bootstrap";
 import "./ProductItem.css";
->>>>>>> feature/persistent-shopping-list
 
 function ProductItem({ id, title, isComplete }) {
   const dispatch = useDispatch();
@@ -23,9 +17,8 @@ function ProductItem({ id, title, isComplete }) {
 
   async function handleSaveProductButtonClick(id) {
     const selectedProduct = productList.find((product) => product.id === id);
-    console.log(selectedProduct);
     await setDoc(doc(db, "products", selectedProduct.id), selectedProduct);
-    dispatch(addCommonProduct(selectedProduct));
+    dispatch(addNewProduct(selectedProduct));
   }
 
   return (

@@ -3,9 +3,10 @@ import { InputGroup, FormControl, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { doc, setDoc } from "firebase/firestore";
 import { nanoid } from "nanoid";
-import { addCommonProduct } from "../redux/productSlice";
+import { addNewProduct } from "../redux/productSlice";
 import { db } from "../firebase/firebase";
 import { useNavigate } from "react-router-dom";
+
 function AddProductPage() {
   const [title, setTitle] = useState("");
   const dispatch = useDispatch();
@@ -23,7 +24,7 @@ function AddProductPage() {
       };
       await setDoc(doc(db, "products", commonProducts.id), commonProducts);
       dispatch(
-        addCommonProduct({
+        addNewProduct({
           commonProducts,
         })
       );

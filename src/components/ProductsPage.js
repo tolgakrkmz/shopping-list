@@ -1,7 +1,7 @@
 import Button from "react-bootstrap/Button";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { fetchCommonProduct, deleteProduct } from "../redux/productSlice";
+import { fetchProducts } from "../redux/productSlice";
 import { db } from "../firebase/firebase";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { doc, deleteDoc } from "firebase/firestore";
@@ -26,14 +26,14 @@ function ProductsPage() {
       querySnapshot.forEach((doc) => {
         commonProductData.push(doc.data());
       });
-      dispatch(fetchCommonProduct(commonProductData));
+      dispatch(fetchProducts(commonProductData));
     }
     getCommonProduct();
   }, []);
   // STEP 2: Add 'Remove' button func.
   async function handleDeleteItemButtonCick(id) {
     await deleteDoc(doc(db, "products", id));
-    dispatch(deleteProduct({ id: id }));
+    dispatch(deleteDoc({ id: id }));
   }
 
   // STEP 3: Handle 'Add product' button click.
