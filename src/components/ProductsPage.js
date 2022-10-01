@@ -1,9 +1,8 @@
 import Button from "react-bootstrap/Button";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { fetchProducts } from "../redux/productSlice";
+import { fetchCommonProducts } from "../redux/productSlice";
 import { db } from "../firebase/firebase";
-import { collection, query, where, getDocs } from "firebase/firestore";
 import { doc, deleteDoc } from "firebase/firestore";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -16,24 +15,13 @@ function ProductsPage() {
   // STEP 1: Fetch data from 'Products' collection from Firestore
   useEffect(() => {
     async function getCommonProduct() {
-      let commonProductData = [];
-      const q = query(
-        collection(db, "products"),
-        where("email", "==", userEmail)
-      );
-      const querySnapshot = await getDocs(q);
-
-      querySnapshot.forEach((doc) => {
-        commonProductData.push(doc.data());
-      });
-      dispatch(fetchProducts(commonProductData));
+      dispatch(fetchCommonProducts(userEmail));
     }
     getCommonProduct();
   }, []);
   // STEP 2: Add 'Remove' button func.
   async function handleDeleteItemButtonCick(id) {
     await deleteDoc(doc(db, "products", id));
-    dispatch(deleteDoc({ id: id }));
   }
 
   // STEP 3: Handle 'Add product' button click.

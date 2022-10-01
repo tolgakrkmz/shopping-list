@@ -30,7 +30,7 @@ function ProductAddForm() {
     <InputGroup size="sm" className="mb-3">
       <FormControl
         aria-label="Small"
-        placeholder="Type you product"
+        placeholder="Type your product"
         value={value}
         onChange={(event) => setValue(event.target.value)}
       />

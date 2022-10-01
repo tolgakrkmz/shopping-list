@@ -18,12 +18,35 @@ export const fetchProducts = createAsyncThunk(
     return data;
   }
 );
+export const fetchCommonProducts = createAsyncThunk(
+  "product/fetchCommonProducts",
+  async (userEmail) => {
+    const q = query(
+      collection(db, "products"),
+      where("email", "==", userEmail)
+    );
+    const querySnapshot = await getDocs(q);
+    const commonProducts = [];
+    querySnapshot.forEach((doc) => {
+      commonProducts.push(doc.data());
+    });
+    return commonProducts;
+  }
+);
 
 export const addNewProduct = createAsyncThunk(
   "product/addNewProduct",
   async (productItem) => {
     await setDoc(doc(db, "shopping-lists", productItem.id), productItem);
     return productItem;
+  }
+);
+
+export const addNewCommonProduct = createAsyncThunk(
+  "product/addNewCommonProduct",
+  async (commonProducts) => {
+    await setDoc(doc(db, "products", commonProducts.id), commonProducts);
+    return commonProducts;
   }
 );
 
@@ -75,6 +98,9 @@ const productSlice = createSlice({
     builder.addCase(fetchProducts.fulfilled, (state, action) => {
       state.shoppingList = action.payload;
     });
+    builder.addCase(fetchCommonProducts.fulfilled, (state, action) => {
+      state.commonProducts = action.payload;
+    });
     builder.addCase(addNewProduct.fulfilled, (state, action) => {
       state.shoppingList.push(action.payload);
     });
@@ -95,6 +121,9 @@ const productSlice = createSlice({
       for (let i = 0; i < state.shoppingList.length; i++) {
         state.shoppingList[i].isComplete = !isAllComplete;
       }
+    });
+    builder.addCase(addNewCommonProduct.fulfilled, (state, action) => {
+      state.commonProducts.push(action.payload);
     });
   },
 });
