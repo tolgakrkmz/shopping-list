@@ -10,9 +10,7 @@ import ChooseProductModal from "./ChooseProductModal";
 function ShoppingListPage() {
   const dispatch = useDispatch();
   const userEmail = useSelector((state) => state.user.userEmail);
-  const modalProducts = useSelector((state) => state.product.modalProducts);
   const [isOpenModal, setIsOpenModal] = useState(false);
-
   useEffect(() => {
     dispatch(fetchProducts(userEmail));
     dispatch(fetchProductsForModal(userEmail));
