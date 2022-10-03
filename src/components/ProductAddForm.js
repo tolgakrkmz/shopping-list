@@ -11,7 +11,7 @@ function ProductAddForm() {
   const dispatch = useDispatch();
   const userEmail = useSelector((state) => state.user.userEmail);
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
 
     if (value !== "") {
@@ -21,7 +21,7 @@ function ProductAddForm() {
         isComplete: false,
         email: userEmail,
       };
-      dispatch(addNewProduct(productItem));
+      await dispatch(addNewProduct(productItem));
       setValue("");
     }
   }

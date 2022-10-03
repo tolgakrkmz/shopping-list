@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import { InputGroup, FormControl, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { doc, setDoc } from "firebase/firestore";
 import { nanoid } from "nanoid";
 import { addNewCommonProduct } from "../redux/productSlice";
-import { db } from "../firebase/firebase";
 import { useNavigate } from "react-router-dom";
 
 function AddProductPage() {
@@ -17,17 +15,12 @@ function AddProductPage() {
     e.preventDefault();
 
     if (title !== "") {
-      const commonProducts = {
+      const commonProduct = {
         id: nanoid(),
         title: title,
         email: userEmail,
       };
-      await setDoc(doc(db, "products", commonProducts.id), commonProducts);
-      dispatch(
-        addNewCommonProduct({
-          commonProducts,
-        })
-      );
+      await dispatch(addNewCommonProduct(commonProduct));
       setTitle("");
       navigate("/products");
     }
@@ -37,7 +30,7 @@ function AddProductPage() {
     <InputGroup size="sm" className="mb-3">
       <FormControl
         aria-label="Small"
-        placeholder="Type you product"
+        placeholder="Type your product"
         value={title}
         onChange={(event) => setTitle(event.target.value)}
       />

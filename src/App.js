@@ -42,18 +42,27 @@ function App() {
             </PrivateRoute>
           }
         />
-        <Route
-          path="/products"
-          element={
-            <PrivateRoute>
-              <ProductsPage />
-            </PrivateRoute>
-          }
-        />
+        <Route path="/products">
+          <Route
+            path="/products"
+            element={
+              <PrivateRoute>
+                <ProductsPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/products/add"
+            element={
+              <PrivateRoute>
+                <AddProductPage />
+              </PrivateRoute>
+            }
+          />
+        </Route>
 
         <Route path="/" element={<Navigate to="/shopping-list" />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/addproduct" element={<AddProductPage />} />
       </Routes>
     </>
   );

@@ -1,7 +1,15 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { db } from "../firebase/firebase";
-import { collection, query, where, getDocs } from "firebase/firestore";
-import { doc, setDoc, updateDoc } from "firebase/firestore";
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  doc,
+  setDoc,
+  updateDoc,
+  deleteDoc,
+} from "firebase/firestore";
 
 export const fetchProducts = createAsyncThunk(
   "product/fetchProducts",
@@ -18,6 +26,7 @@ export const fetchProducts = createAsyncThunk(
     return data;
   }
 );
+
 export const fetchCommonProducts = createAsyncThunk(
   "product/fetchCommonProducts",
   async (userEmail) => {
@@ -34,6 +43,23 @@ export const fetchCommonProducts = createAsyncThunk(
   }
 );
 
+export const fetchProductsForModal = createAsyncThunk(
+  "product/fetchProductsForModal",
+  async (userEmail) => {
+    const modalProducts = [];
+    const q = query(
+      collection(db, "products"),
+      where("email", "==", userEmail)
+    );
+    const querySnapshot = await getDocs(q);
+
+    querySnapshot.forEach((doc) => {
+      modalProducts.push(doc.data());
+    });
+    return modalProducts;
+  }
+);
+
 export const addNewProduct = createAsyncThunk(
   "product/addNewProduct",
   async (productItem) => {
@@ -44,9 +70,9 @@ export const addNewProduct = createAsyncThunk(
 
 export const addNewCommonProduct = createAsyncThunk(
   "product/addNewCommonProduct",
-  async (commonProducts) => {
-    await setDoc(doc(db, "products", commonProducts.id), commonProducts);
-    return commonProducts;
+  async (commonProduct) => {
+    await setDoc(doc(db, "products", commonProduct.id), commonProduct);
+    return commonProduct;
   }
 );
 
@@ -88,11 +114,20 @@ export const toggleCompleteAllProducts = createAsyncThunk(
   }
 );
 
+export const deleteCommonProduct = createAsyncThunk(
+  "product/deleteCommonProduct",
+  async (id) => {
+    await deleteDoc(doc(db, "products", id));
+    return id;
+  }
+);
+
 const productSlice = createSlice({
   name: "product",
   initialState: {
     shoppingList: [],
     commonProducts: [],
+    modalProducts: [],
   },
   extraReducers: (builder) => {
     builder.addCase(fetchProducts.fulfilled, (state, action) => {
@@ -124,6 +159,17 @@ const productSlice = createSlice({
       for (let i = 0; i < state.shoppingList.length; i++) {
         state.shoppingList[i].isComplete = !isAllComplete;
       }
+    });
+    builder.addCase(deleteCommonProduct.fulfilled, (state, action) => {
+      return {
+        ...state.commonProducts,
+        commonProducts: state.commonProducts.filter(
+          (product) => product.id !== action.payload
+        ),
+      };
+    });
+    builder.addCase(fetchProductsForModal.fulfilled, (state, action) => {
+      state.modalProducts = action.payload;
     });
   },
 });

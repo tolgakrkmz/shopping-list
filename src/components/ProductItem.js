@@ -4,8 +4,6 @@ import {
   toggleCompleteProduct,
   addNewCommonProduct,
 } from "../redux/productSlice";
-import { doc, setDoc } from "firebase/firestore";
-import { db } from "../firebase/firebase";
 import Button from "react-bootstrap/Button";
 import { Form } from "react-bootstrap";
 import "./ProductItem.css";
@@ -18,10 +16,11 @@ function ProductItem({ id, title, isComplete }) {
     dispatch(toggleCompleteProduct({ id, isComplete }));
   }
 
-  async function handleSaveProductButtonClick(id) {
+  function handleSaveProductButtonClick() {
     const selectedProduct = productList.find((product) => product.id === id);
-    await setDoc(doc(db, "products", selectedProduct.id), selectedProduct);
-    dispatch(addNewCommonProduct(selectedProduct));
+    return function () {
+      return dispatch(addNewCommonProduct(selectedProduct));
+    };
   }
 
   return (
@@ -33,14 +32,12 @@ function ProductItem({ id, title, isComplete }) {
         }
       >
         {title}
-        {
-          <Button
-            variant="outline-success"
-            onClick={() => handleSaveProductButtonClick(id)}
-          >
-            Save product
-          </Button>
-        }
+        <Button
+          variant="outline-success"
+          onClick={handleSaveProductButtonClick()}
+        >
+          Save product
+        </Button>
       </p>
     </li>
   );
