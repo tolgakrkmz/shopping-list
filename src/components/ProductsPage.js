@@ -14,10 +14,7 @@ function ProductsPage() {
   const userEmail = useSelector((state) => state.user.userEmail);
 
   useEffect(() => {
-    async function getCommonProducts() {
-      dispatch(fetchCommonProducts(userEmail));
-    }
-    getCommonProducts();
+    dispatch(fetchCommonProducts(userEmail));
   }, []);
 
   function handleDeleteItemButtonClick(id) {
@@ -28,9 +25,9 @@ function ProductsPage() {
 
   return (
     <>
-      <Link to="/products/add">
-        <Button>Add Product</Button>
-      </Link>
+      <Button as={Link} to="/products/add">
+        Add Product
+      </Button>
 
       <ul className="common-product-list">
         {commonProducts.map((product) => (
