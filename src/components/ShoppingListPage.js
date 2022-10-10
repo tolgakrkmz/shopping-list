@@ -11,9 +11,9 @@ function ShoppingListPage() {
   const dispatch = useDispatch();
   const userEmail = useSelector((state) => state.user.userEmail);
   const [isOpenModal, setIsOpenModal] = useState(false);
+
   useEffect(() => {
     dispatch(fetchProducts(userEmail));
-    dispatch(fetchProductsForModal(userEmail));
   }, []);
 
   return (

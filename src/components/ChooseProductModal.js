@@ -2,9 +2,12 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { useSelector, useDispatch } from "react-redux";
 import { addNewProduct } from "../redux/productSlice";
+import { useEffect } from "react";
+import { fetchProductsForModal } from "../redux/productSlice";
 
 function ChooseProductModal({ setIsOpenModal }) {
   const modalProducts = useSelector((state) => state.product.modalProducts);
+  const userEmail = useSelector((state) => state.user.userEmail);
   const dispatch = useDispatch();
 
   function handleAddFromProductsButtonClick(id) {
@@ -14,6 +17,10 @@ function ChooseProductModal({ setIsOpenModal }) {
       setIsOpenModal(false);
     };
   }
+
+  useEffect(() => {
+    dispatch(fetchProductsForModal(userEmail));
+  }, []);
 
   return (
     <Modal.Dialog>

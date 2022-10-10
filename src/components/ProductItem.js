@@ -32,7 +32,7 @@ function ProductItem({ id, title, isComplete }) {
         {title}
         <Button
           variant="outline-success"
-          onClick={handleSaveProductButtonClick()}
+          onClick={handleSaveProductButtonClick}
         >
           Save product
         </Button>

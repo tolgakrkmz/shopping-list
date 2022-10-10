@@ -46,13 +46,12 @@ export const fetchCommonProducts = createAsyncThunk(
 export const fetchProductsForModal = createAsyncThunk(
   "product/fetchProductsForModal",
   async (userEmail) => {
-    const modalProducts = [];
     const q = query(
       collection(db, "products"),
       where("email", "==", userEmail)
     );
     const querySnapshot = await getDocs(q);
-
+    const modalProducts = [];
     querySnapshot.forEach((doc) => {
       modalProducts.push(doc.data());
     });
