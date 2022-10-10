@@ -18,7 +18,7 @@ function ProductItem({ id, title, isComplete }) {
 
   function handleSaveProductButtonClick() {
     const selectedProduct = productList.find((product) => product.id === id);
-    return dispatch(addNewCommonProduct(selectedProduct));
+    dispatch(addNewCommonProduct(selectedProduct));
   }
 
   return (
