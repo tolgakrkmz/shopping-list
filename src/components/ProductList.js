@@ -9,6 +9,7 @@ import React, { useMemo } from "react";
 function ProductList() {
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.product.shoppingList);
+
   const isAllProductsComplete = productList.every(
     (value) => value.isComplete === true
   );

@@ -2,6 +2,7 @@ import React from "react";
 import { Container, Navbar } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import "./MainNavbar.css";
 
 function MainNavbar() {
   const isUserLogged = useSelector((state) => state.user.isLogged);
@@ -10,16 +11,19 @@ function MainNavbar() {
   return (
     <Navbar>
       <Container>
-        <Navbar.Text>
+        <Navbar.Text className="nav-text">
           <Link to="/shopping-list">Shopping List</Link>
         </Navbar.Text>
-
         {isUserLogged && (
-          <Navbar.Text>
+          <Navbar.Text className="nav-text">
             <Link to="/shopping-list">My List</Link>
           </Navbar.Text>
         )}
-
+        {isUserLogged && (
+          <Navbar.Text className="nav-text">
+            <Link to="/products">Products</Link>
+          </Navbar.Text>
+        )}
         <Navbar.Toggle />
         <Navbar.Collapse className="justify-content-end">
           {isUserLogged ? (
