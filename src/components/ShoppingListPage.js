@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { fetchProducts, fetchProductsForModal } from "../redux/productSlice";
+import { fetchProducts } from "../redux/productSlice";
 import { useDispatch, useSelector } from "react-redux";
 import ProductAddForm from "./ProductAddForm";
 import ProductList from "./ProductList";

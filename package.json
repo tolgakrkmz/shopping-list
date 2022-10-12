@@ -16,7 +16,7 @@
     "react-scripts": "5.0.1"
   },
   "scripts": {
-    "start": "react-scripts start --open-page shopping-list",
+    "start": "react-scripts start",
     "deploy": "gh-pages -d build",
     "predeploy": "npm run build",
     "build": "react-scripts build",

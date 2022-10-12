@@ -2,7 +2,7 @@ import ShoppingListPage from "./components/ShoppingListPage";
 import { Routes, Route, Navigate } from "react-router-dom";
 import LoginPage from "./components/LoginPage";
 import PrivateRoute from "./utils/PrivateRoute";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getAuth } from "firebase/auth";
 import { firebaseApp } from "./firebase/firebase";
